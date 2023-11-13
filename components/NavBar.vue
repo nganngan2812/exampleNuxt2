@@ -27,7 +27,7 @@
             <NuxtLink to="/cart">
                 <button class="px-2 bg-rose-200 mx-4 rounded-md"> Cart </button>
             </NuxtLink>
-            <div><button class="px-2 shadow-lg shadow-inner rounded-md bg-white">Logout</button></div>
+            <NuxtLink to="/login" ><button class="px-2 shadow-lg shadow-inner rounded-md bg-white">Logout</button></NuxtLink>
        </div>
         
     </div>

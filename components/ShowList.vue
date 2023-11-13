@@ -1,8 +1,8 @@
 <template>
     <div class="bg-white" id="top">
         <h2 class="text-2xl mb-10">{{ tilte }}</h2>
-        <button class="m-5" @click="store.sortP('name', products)">Sort by name</button>
-        <button @click="store.sortP('price', products)">Sort by price</button>
+        <button class="m-5" @click="changeSort('name')">Sort by name</button>
+        <button @click="changeSort('price')">Sort by price</button>
         <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
             <a v-for="product in paginatedData" :key="product.objectID" :href="product.href" class="group">
                 <NuxtLink :to="`/items/${product.objectID}`">
@@ -44,12 +44,25 @@ export default {
         return{
             page: 1,
             perPage: 100,
-            
+            sort: {
+                name:false,
+                price:false
+            }
         }
     },
     computed: {
         paginatedData() {
-            return this.products.slice((this.page - 1) * this.perPage, this.page * this.perPage)
+            if(!Object.values(this.sort).find(i => i == true)){return this.products.slice((this.page - 1) * this.perPage, this.page * this.perPage)}
+            else {
+                for (let [key] of Object.entries(this.sort)) {
+                    if(this.sort[key] == true){
+                        const a = {val: this.products, k: key }
+                        this.$store.commit('sortP', a)
+                        return this.$store.state.prods.slice((this.page - 1) * this.perPage, this.page * this.perPage)
+                    }
+                }    
+            }
+            
         }
     },
     methods: {
@@ -76,7 +89,14 @@ export default {
                 return 'bg-gray-100';
             }
             else {return 'bg-rose-300'}
+        },
+        changeSort(k){
+            for (let [key] of Object.entries(this.sort)) {
+                if(k == key) {this.sort[k] = !this.sort[key];}
+                else {this.sort[key] = false;}
+            }
         }
+        
     }
 }
 </script>
