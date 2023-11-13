@@ -6,6 +6,7 @@
         <div class="m-20 min-h-screen">
             <Nuxt />
         </div> 
+        <div> hello </div>
         <Footer />
     </div>
 </template>
